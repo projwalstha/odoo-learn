@@ -1,0 +1,62 @@
+<odoo>
+    <record id = 'menu_patient_form' model="website.menu">
+        <field name = "name">Create Patient</field>
+        <field name = 'url'>/hospital/patient</field>
+        <field name = 'parent_id' ref="website.main_menu"></field>
+        <field name="sequence">55</field>
+    </record>
+    <template id="patients-records" name="Patient_records">
+            <t t-call="website.layout" >
+                <div class="container">
+                    <div class="card-deck">
+                         <t t-foreach="objs" t-as="patient">
+                             <div class="card">
+                                 <img t-attf-src="data:image/png;base64,{{ patient.image }}" />
+                                     <div class="card-body">
+                                          <h5 class="card-title"><t t-esc="patient.patient_name" /></h5>
+                                          <p class="card-text">Age:<t t-esc="patient.patient_age"/> </p>
+                                          <p class="card-text">Gender:<t t-esc="patient.patient_gender"/> </p>
+                                          <p class="card-text">Age Group:<t t-esc="patient.age_group"/> </p>
+
+                                    </div>
+                              </div>
+                         </t>
+                    </div>
+                </div>
+        </t>
+    </template>
+
+    <template id="patient-create" name="patient_create">
+                <t t-call="website.layout" >
+                     <div class="container">
+                    <form role="form"  action="/hospital/patient" method="POST">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="patient_name">Name</label>
+                          <input type="text" class="form-control" name="patient_name" id="patient_name" placeholder="Name" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="patient_age">Age</label>
+                          <input type="text" class="form-control" id="patient_age" name='patient_age' placeholder="Age"/>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="patient_gender">Gender</label>
+                          <select id="patient_gender" name="patient_gender" class="form-control">
+                            <option value="male" selected="'selected">Male</option>
+                            <option value="female">Female</option>
+                          </select>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <input type="text" name='notes' class="form-control" id="notes" placeholder="Description"/>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                     </div>
+                </t>
+    </template>
+</odoo>

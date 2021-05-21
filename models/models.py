@@ -55,7 +55,7 @@ class HospitalPatient(models.Model):
         ('minor', 'minor')
     ], compute='set_age_group',store= True)
     notes = fields.Text('Notes',track_visibility="always")
-    image = fields.Binary(string='Image', track_visibility="always")
+    image = fields.Binary(string='Image',track_visibility="always")
     name_seq = fields.Char(string='Order Reference', required=True, copy=False, readonly=True, index=True, default= lambda self: _('New'))
     appointment_count = fields.Integer('Appointment', compute='get_appointment_count')
     patient_appointment = fields.One2many('hospital.appointment', 'patient_id', string="Appointments")

@@ -27,9 +27,11 @@
         'views/doctors.xml',
         'views/pharmacy.xml',
         'views/templates.xml',
+        'views/websit_form.xml',
         'views/appointment.xml',
         'report/report.xml',
         'report/pharmacy_bill.xml',
+
 
     ],
     # only loaded in demonstration mode

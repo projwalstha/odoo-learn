@@ -8,6 +8,7 @@ class PharmacyBillReport(models.AbstractModel):
     @api.model
     def _get_report_values(self, docids, data=None):
         print('yes')
+        print(docids)
         print(docids[0])
         doc = self.env['hospital.appointment'].browse(docids[0])
         purchase = self.env['hospital.pharmacy'].search([('appoint_id', '=', docids[0])])
