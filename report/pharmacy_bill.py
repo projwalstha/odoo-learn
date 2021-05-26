@@ -11,6 +11,8 @@ class PharmacyBillReport(models.AbstractModel):
         print(docids)
         print(docids[0])
         doc = self.env['hospital.appointment'].browse(docids[0])
+        print('----------------------------------------------------')
+        print(type(doc))
         purchase = self.env['hospital.pharmacy'].search([('appoint_id', '=', docids[0])])
         print(doc)
         print(purchase[1].prescribed[0].medicine_id[0].medicine_name)
@@ -28,6 +30,7 @@ class PharmacyBillReport(models.AbstractModel):
                 'price': item.price
             }
             medicine_list.append(vals)
+            print(vals)
         print(medicine_list)
         print(doc)
 

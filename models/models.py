@@ -66,6 +66,20 @@ class HospitalPatient(models.Model):
                 vals['name_seq'] = self.env['ir.sequence'].next_by_code('hospital.patient.sequence') or _('New')
         result = super(HospitalPatient, self).create(vals)
         return result
+
+    @api.model
+    def get_patients_list(self):
+        patient = self.search([])
+        patient_list = []
+        for pat in patient:
+            val = {
+                'patient_name': pat.patient_name,
+                'patient_age': pat.patient_age,
+                'patient_gender': pat.patient_gender,
+                'notes':pat.notes,
+            }
+            patient_list.append(val)
+        return patient_list
     # @api.depends('value')
     # def _value_pc(self):
     #     for record in self:

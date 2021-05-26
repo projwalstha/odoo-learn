@@ -13,11 +13,10 @@
                              <div class="card">
                                  <img t-attf-src="data:image/png;base64,{{ patient.image }}" />
                                      <div class="card-body">
-                                          <h5 class="card-title"><t t-esc="patient.patient_name" /></h5>
-                                          <p class="card-text">Age:<t t-esc="patient.patient_age"/> </p>
-                                          <p class="card-text">Gender:<t t-esc="patient.patient_gender"/> </p>
-                                          <p class="card-text">Age Group:<t t-esc="patient.age_group"/> </p>
-
+                                         <h5 class="card-title"><t t-esc="patient.patient_name" /></h5>
+                                        <p class="card-text">Age:<t t-esc="patient.patient_age"/> </p>
+                                        <p class="card-text">Gender:<t t-esc="patient.patient_gender"/> </p>
+                                         <p class="card-text">Age Group:<t t-esc="patient.age_group"/></p>
                                     </div>
                               </div>
                          </t>
@@ -54,9 +53,148 @@
                         <label for="notes">Notes</label>
                         <input type="text" name='notes' class="form-control" id="notes" placeholder="Description"/>
                       </div>
-                      <button type="submit" class="btn btn-primary">Create</button>
+                      <button type="submit" class="btn btn-primary" id="submit-btn">Create</button>
                     </form>
                      </div>
                 </t>
     </template>
+
+        <template id="show-doctors" name="show-doctors">
+            <t t-call-assets="web.assets_common"/>
+            <script type="text/javascript" src='/hospital/static/src/js/js_module.js'/>
+            <t t-call="website.layout" >
+                <div class="container">
+                    <h1>Doctors</h1>
+                    <button class="btn btn-dark" id="btn-show-doctors" type="button">Show Doctors</button>
+<!--                    Modal for create-->
+                    <button type="button" id='create-modal' class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+                    Create Doctor Record
+                    </button>
+
+                    <t t-call="hospital.doctor-create"/>
+                    <t t-call="hospital.doctor-delete"/>
+                    <t t-call="hospital.doctor-update"/>
+                    <div class="card-columns">
+
+                    </div>
+                </div>
+
+
+
+            </t>
+        </template>
+
+
+    <template id="doctor-create" name="doctor-create">
+<!-- Modal -->
+<div class="modal fade" id="createModal" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Doctor</h5>
+      </div>
+        <form id="create-form" role="form"  method="POST">
+      <div class="modal-body">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="doctor_name">Name</label>
+                          <input type="text" class="form-control" name="doctor_name" id="doctor_name" placeholder="Name" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="doctor_age">Age</label>
+                          <input type="text" class="form-control" id="doctor_age" name='doctor_age' placeholder="Age"/>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="gender">Gender</label>
+                          <select id="gender" name="gender" class="form-control">
+                            <option value="male" selected="'selected">Male</option>
+                            <option value="female">Female</option>
+                          </select>
+                        </div>
+                          <div class="form-group col-md-6">
+                          <label for="doctor_speciality">Speciality</label>
+                          <input type="text" class="form-control" id="doctor_speciality" name='doctor_speciality' placeholder="Speciality"/>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="doctor_phone">Phone Number</label>
+                        <input type="text" name='doctor_phone' class="form-control" id="doctor_phone" placeholder="Phone Number"/>
+                      </div>
+        <button type="button" style="display:flex !important" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="form-submit">Create</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+    </template>
+
+
+        <template id="doctor-update" name="doctor-create">
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Doctor</h5>
+      </div>
+        <form role="form"  method="POST">
+      <div class="modal-body">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="update_doctor_name">Name</label>
+                          <input type="text" class="form-control" name="doctor_name" id="update_doctor_name" placeholder="Name" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="update_doctor_age">Age</label>
+                          <input type="text" class="form-control" id="update_doctor_age" name='doctor_age' placeholder="Age"/>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="update_gender">Gender</label>
+                          <select id="update_gender" name="gender" class="form-control">
+                            <option value="male" selected="'selected">Male</option>
+                            <option value="female">Female</option>
+                          </select>
+                        </div>
+                          <div class="form-group col-md-6">
+                          <label for="update_doctor_speciality">Speciality</label>
+                          <input type="text" class="form-control" id="update_doctor_speciality" name='doctor_speciality' placeholder="Speciality"/>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="update_doctor_phone">Phone Number</label>
+                        <input type="text" name='doctor_phone' class="form-control" id="update_doctor_phone" placeholder="Phone Number"/>
+                      </div>
+        <button type="button" style="display:flex !important" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="update_form-submit">Save Changes</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+    </template>
+
+    <template id="doctor-delete" name="doctor-delete">
+        <div class="modal" id="deleteModal"  role="dialog" >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                  </div>
+                  <div class="modal-footer">
+<!--                   <p class='badge badge-primary text-wrap' style="margin:20px;cursor:'alias'" id="delete-btn">Delete</p>-->
+                    <button type="submit" class="btn btn-primary" id="delete-btn" >Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+    </template>
+
 </odoo>

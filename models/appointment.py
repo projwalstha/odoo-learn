@@ -47,7 +47,6 @@ class HospitalAppointment(models.Model):
         discounted = taxed_amt - 0.01 * self.discount * taxed_amt
         self.g_total = discounted
 
-
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):

@@ -11,11 +11,16 @@ class Hospital(http.Controller):
         if bool(kw):
             request.env['hospital.patients'].create(kw)
         objs = request.env['hospital.patients'].search([])
+        print(objs)
         return request.render('hospital.patients-records', {'objs': objs})
 
     @http.route('/hospital/PatientForm', auth='public', website=True)
     def PatientForm(self, **kwargs):
         return request.render('hospital.patient-create', {})
+
+    @http.route('/hospital/doctors', auth='public', website=True)
+    def DcotorList(self, **kwargs):
+        return request.render('hospital.show-doctors')
 
     # @http.route('/hospital/patient/create', auth='public',website=True)
     # def PatientCreate(self,**kw):

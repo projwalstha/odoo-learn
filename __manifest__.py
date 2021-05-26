@@ -16,7 +16,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail','sale'],
+    'depends': ['base', 'mail','sale','web'],
+    ''
+    'qweb': [
+        'views/websit_form.xml'
+    ],
 
     # always loaded
     'data': [
@@ -25,12 +29,13 @@
         'views/views.xml',
         'views/medicine.xml',
         'views/doctors.xml',
+        'views/assets.xml',
         'views/pharmacy.xml',
         'views/templates.xml',
-        'views/websit_form.xml',
         'views/appointment.xml',
         'report/report.xml',
         'report/pharmacy_bill.xml',
+        'views/websit_form.xml'
 
 
     ],
